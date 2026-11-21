@@ -60,7 +60,7 @@ def head(title, desc, path, extra_ld):
     url = SITE + path
     ld = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in extra_ld)
     return f"""<!doctype html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><script async src="https://www.googletagmanager.com/gtm.js?id=GTM-5FMDV5HQ"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><script async src="https://www.googletagmanager.com/gtm.js?id=GTM-5FMDV5HQ"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
