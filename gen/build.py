@@ -77,7 +77,7 @@ def head(title, desc, path, extra_ld):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap">
 <style>{CSS}</style>{ld}</head><body><div class="w">
 <header><a class="brand" href="/"><img src="/icon.png" alt="" width="44" height="44"><b>ضالّتي</b></a>
-<nav><a href="/#how">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="{APP}">حمّل التطبيق</a></nav></header>
+<nav><a href="/#how">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="/gov.html">للجهات الحكومية</a><a href="{APP}">حمّل التطبيق</a></nav></header>
 """
 
 FOOT = f"""<footer>ضالّتي، تطبيق سعودي لإدارة المفقودات والموجودات في المنشآت.<br>
@@ -159,17 +159,46 @@ def blog_index():
     t += f"<main><h1>مقالات ضالّتي</h1><p class='lead'>كل ما يخص إدارة المفقودات في المنشآت.</p><ul class='posts' style='margin-top:24px'>{posts}</ul></main>{FOOT}"
     write("/blog/index.html", t)
 
+def gov():
+    faq=[("هل يناسب الوزارات والأمانات والبلديات؟","نعم، يناسب الوزارات والهيئات والأمانات والبلديات والحدائق العامة والمطارات ومراكز خدمة المستفيدين."),
+         ("كم اشتراك الجهات الحكومية؟","999 ريال شهريًا للجهة، ويمكن الإلغاء في أي وقت."),
+         ("هل يحتاج أجهزة أو ربط أنظمة؟","لا، يعمل على iPhone وكل شيء يتم عن بُعد، والحساب يجهز خلال يوم عمل.")]
+    fq={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in faq]}
+    svc={"@context":"https://schema.org","@type":"Service","name":"ضالّتي للجهات الحكومية","provider":ORG,"areaServed":"SA",
+         "audience":{"@type":"Audience","audienceType":"الوزارات والهيئات والأمانات والبلديات"},
+         "offers":{"@type":"Offer","price":"999","priceCurrency":"SAR"}}
+    faqh="".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in faq)
+    rel=[a for a in ARTICLES if a["slug"] in ("amanat-baladiyat-lost-and-found","ministries-service-centers-lost-and-found","government-lost-and-found-office")]
+    posts="".join(f'<li><a href="/blog/{a["slug"]}.html"><b>{html.escape(a["h1"])}</b></a></li>' for a in rel)
+    t=head("ضالّتي للجهات الحكومية | إدارة المفقودات في الوزارات والأمانات والبلديات",
+           "حل سعودي لإدارة المفقودات في الوزارات والهيئات والأمانات والبلديات والحدائق والمطارات ومراكز الخدمة: تسجيل بالصور، بحث ذاتي، وتسليم موثق.",
+           "/gov.html",[ORG,svc,fq])
+    t+=f"""<main><section class="hero"><h1>إدارة المفقودات للوزارات والأمانات والبلديات</h1>
+<p class="lead">من الحدائق والممشى إلى مراكز خدمة المستفيدين: سجل موحد لكل المواقع، والمستفيد يبحث بنفسه من جواله، والتسليم بعد تحقق.</p>
+<div class="btns"><a class="btn" href="mailto:info@dhallati.com">اطلب حساب الجهة</a><a class="btn o" href="{APP}">التطبيق على App Store</a></div></section>
+<h2>لمن؟</h2>
+<ul class="feat"><li>الوزارات والهيئات ومراكز خدمة المستفيدين</li><li>الأمانات والبلديات</li><li>الحدائق العامة والممشى والواجهات البحرية</li><li>المطارات والمستشفيات والجامعات الحكومية</li></ul>
+<h2>كيف يخدم الجهة</h2>
+<ol class="steps"><li>الموظف يسجل الغرض بصورة ووصف خلال ثوانٍ، من أي موقع.</li><li>المستفيد يبحث من جواله، والتطبيق يطابقه مع الموجودات.</li><li>سؤال تحقق، ثم تسليم موثق لصاحب الغرض.</li></ol>
+<ul class="feat"><li>تواصل داخل التطبيق، ورقم الموظف مخفي.</li><li>14 لغة لخدمة الزوار والسياح.</li><li>بدون أجهزة ولا ربط أنظمة.</li><li>الحساب يجهز خلال يوم عمل.</li></ul>
+<h2>الاشتراك</h2><div class="plans"><div class="p"><h3>الجهات الحكومية</h3><p class="price">999 <span>ريال شهريًا</span></p><p class="soft">يمكن الإلغاء في أي وقت.</p></div></div>
+<h2>مقالات للجهات الحكومية</h2><ul class="posts">{posts}</ul>
+<h2>أسئلة شائعة</h2>{faqh}
+<div class="contact"><h2 style="margin-top:0">تواصل معنا</h2><p>راسلونا على <span class="ltr">info@dhallati.com</span> أو اتصلوا على <span class="ltr">0545510045</span>.</p></div></main>{{FOOT}}"""
+    write("/gov.html",t.replace("{FOOT}",FOOT))
+
 def extras():
-    urls = [("/","1.0"),("/blog/","0.8")] + [(f"/blog/{a['slug']}.html","0.7") for a in ARTICLES]
+    urls = [("/","1.0"),("/gov.html","0.9"),("/blog/","0.8")] + [(f"/blog/{a['slug']}.html","0.7") for a in ARTICLES]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
          "".join(f"<url><loc>{SITE}{u}</loc><priority>{p}</priority></url>\n" for u,p in urls) + "</urlset>\n"
     write("/sitemap.xml", sm)
     write("/robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     write("/CNAME", "dhallati.com\n")
     write("/.nojekyll", "")
+    write("/12a18a2853cf688f29707202dac6a65f.txt", "12a18a2853cf688f29707202dac6a65f")
     t = head("الصفحة غير موجودة | ضالّتي", "الصفحة غير موجودة.", "/404.html", [])
     t += f"<main><h1>الصفحة غير موجودة</h1><p><a href='/'>الرجوع للرئيسية</a></p></main>{FOOT}"
     write("/404.html", t)
 
-home(); blog_index(); [article(a) for a in ARTICLES]; extras()
+home(); gov(); blog_index(); [article(a) for a in ARTICLES]; extras()
 print("ok", len(ARTICLES))
