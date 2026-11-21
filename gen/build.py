@@ -5,7 +5,7 @@ from articles import ARTICLES
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://dhallati.com"
 APP = "https://apps.apple.com/app/id6831172490"
-SOCIAL = []  # filled after accounts are created
+SOCIAL = ["https://www.instagram.com/dhallati.sa/", "https://www.facebook.com/profile.php?id=61596629137000"]  # filled after accounts are created
 
 CSS = """
 :root{--bg:#2F2924;--ink:#F1E7D6;--soft:#C9BBA6;--card:#3A322B;--line:#4E433A;--butter:#F2E2A0;--cream:#ECDFC8;color-scheme:dark}
