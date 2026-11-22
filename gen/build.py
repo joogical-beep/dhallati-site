@@ -2,6 +2,7 @@ import json, os, html, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from articles import ARTICLES
 from pages import build_pages, CITIES, build_pay
+import home_live as HL
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://dhallati.com"
@@ -83,7 +84,7 @@ def head(title, desc, path, extra_ld):
 <link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap">
-<style>{CSS}</style>{ld}</head><body><div class="w">
+<style>{CSS}{HL.CSS}</style>{ld}</head><body><div class="w">
 <header><a class="brand" href="/"><img src="/icon.png" alt="" width="44" height="44"><b>ضالّتي</b></a>
 <nav><a href="/how-it-works.html">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="/gov.html">للجهات الحكومية</a><a href="/support.html">الدعم</a><a href="{APP}">حمّل التطبيق</a></nav></header>
 """
@@ -120,20 +121,11 @@ def home():
     t = head("ضالّتي (ضالتي) Dallati | تطبيق مفقودات للمنشآت في السعودية",
              "ضالّتي (Dallati) تطبيق مفقودات سعودي لإدارة المفقودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية: تسجيل بالصور، بحث ومطابقة، وتسليم آمن.",
              "/", [ORG, app, fq])
-    t += f"""<main><section class="hero"><h1>المفقودات في منشأتك، ترجع لأصحابها بأمان</h1>
-<p class="lead">«ضالّتي» تطبيق سعودي على iPhone لإدارة المفقودات والموجودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية.</p>
-<div class="plans" style="margin-top:28px">
-<div class="p"><h3>للأفراد: ضاع منك شيء؟</h3><p class="soft">مجانًا. ابحث عن غرضك من جوالك.</p><div class="btns">{DL}</div></div>
+    t += HL.hero(APP, WEBAPP) + HL.JOURNEY + f"""<main>
+<div class="plans" style="margin-top:36px">
+<div class="p"><h3>للأفراد: ضاع منك شيء؟</h3><p class="soft">مجانًا. ابحث وبلّغ من جوالك.</p><div class="btns">{DL}</div></div>
 <div class="p"><h3>للجهات والمنشآت</h3><p class="soft">اشتراك شهري، ونجهّز حسابكم خلال يوم عمل.</p><div class="btns">{SUB_PRIVATE}{SUB_GOV}</div></div>
-</div></section>
-<p class="quote">الناس لا تنسى أبدًا المكان الذي صنع لها ذكرى سعيدة.</p>
-<h2 id="how">كيف يعمل</h2>
-<ol class="steps"><li>الموظف يسجّل الغرض الموجود بصورة ووصف خلال ثوانٍ.</li>
-<li>صاحب الغرض يبحث من جواله، والتطبيق يطابقه مع موجوداتكم.</li>
-<li>سؤال تحقق، ثم تسليم الغرض لصاحبه الحقيقي.</li></ol>
-<h2>لماذا ضالّتي</h2>
-<ul class="feat"><li>تواصل داخل التطبيق، ورقم الموظف يبقى مخفيًا.</li><li>متاح بـ14 لغة تخدم جميع الزوار.</li>
-<li>بدون أجهزة ولا تركيب، كل شيء عن بُعد.</li><li>نجهّز حسابكم خلال يوم عمل واحد.</li></ul>
+</div>
 <h2 id="prices">الأسعار</h2>
 <div class="plans"><div class="p"><h3>الجهات الخاصة</h3><p class="price">299 <span>ريال شهريًا</span></p>
 <p class="soft">المولات، المستشفيات والعيادات، المطاعم والمقاهي، الفنادق، الشركات، الجامعات والمدارس الخاصة.</p><div class="btns">{SUB_PRIVATE}</div></div>
@@ -146,7 +138,7 @@ def home():
 <div class="contact"><h2 style="margin-top:0">ابدأ اليوم</h2>
 <p>راسلنا على <span class="ltr">info@dhallati.com</span> أو اتصل على <span class="ltr">0545510045</span>، ونجهّز حساب منشأتك خلال يوم عمل.</p>
 <div class="btns">{DL}</div></div></main>{FOOT}"""
-    write("/index.html", t)
+    write("/index.html", t.replace("</body>", HL.JS+"</body>"))
 
 def article(a):
     path = f"/blog/{a['slug']}.html"

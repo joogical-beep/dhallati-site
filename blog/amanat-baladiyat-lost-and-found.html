@@ -62,6 +62,41 @@ article li{margin:6px 0}
 .tip{background:var(--card);border-inline-start:4px solid var(--butter);border-radius:10px;padding:12px 16px;margin:20px 0}
 .meta{color:var(--soft);font-size:.9rem;margin-top:8px}
 :focus-visible{outline:2px solid var(--butter);outline-offset:3px}
+
+.live{position:relative;padding:40px 0 10px;overflow:hidden}
+.ask{text-align:right;unicode-bidi:isolate;font-size:clamp(2.3rem,7vw,4.4rem);line-height:1.15;color:var(--butter);margin:0;min-height:1.3em;font-weight:700;transition:opacity .45s,transform .45s}
+.ask.out{opacity:0;transform:translateY(10px)}
+.sub{color:var(--cream);font-size:1.15rem;max-width:46ch;margin:12px 0 22px}
+.finder{background:var(--cream);color:#2F2924;border-radius:24px;padding:14px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6);max-width:720px}
+.frow{display:flex;gap:8px;flex-wrap:wrap}
+.frow input{flex:1 1 240px;min-width:0;font:inherit;font-size:1.1rem;padding:14px 16px;border-radius:16px;border:1px solid #d8c9ae;background:#fff;color:#2F2924}
+.frow select{font:inherit;padding:14px;border-radius:16px;border:1px solid #d8c9ae;background:#fff;color:#2F2924}
+.frow button{font:inherit;font-weight:700;padding:14px 22px;border:0;border-radius:16px;background:#2F2924;color:var(--butter);cursor:pointer}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chips button{font:inherit;font-size:.9rem;padding:6px 12px;border-radius:99px;border:1px solid #d8c9ae;background:transparent;color:#5a4c3f;cursor:pointer}
+.chips button[aria-pressed=true]{background:#2F2924;color:var(--butter);border-color:#2F2924}
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:12px}
+.res a{display:block;background:#fff;border-radius:16px;overflow:hidden;text-decoration:none;color:#2F2924;border:1px solid #eadfca}
+.res img,.res .ph{width:100%;aspect-ratio:4/3;object-fit:cover;background:#efe4cf;display:grid;place-items:center;font-size:2rem}
+.res div.t{padding:8px 10px;font-weight:600}.res small{display:block;color:#7a6b5c;font-weight:400}
+.none{margin-top:12px;padding:14px;border-radius:16px;background:#fff;color:#2F2924}
+.none a{color:#2F2924;font-weight:700}
+.journey{position:relative;margin:56px 0 10px}
+.track{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;position:relative}
+.track::before{content:"";position:absolute;top:34px;inset-inline:8%;height:2px;background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 14px)}
+.st{position:relative;text-align:center;padding:0 4px}
+.st i{display:grid;place-items:center;width:68px;height:68px;margin:0 auto 10px;border-radius:50%;background:var(--card);border:1px solid var(--line);font-style:normal;font-size:1.7rem;position:relative;z-index:1}
+.st b{display:block;color:var(--cream)}.st span{color:var(--soft);font-size:.92rem}
+.tag{position:absolute;top:14px;inset-inline-start:8%;width:40px;height:40px;border-radius:12px;background:var(--butter);display:grid;place-items:center;z-index:2;animation:travel 9s ease-in-out infinite}
+@keyframes travel{0%,8%{inset-inline-start:8%}30%,38%{inset-inline-start:33%}60%,68%{inset-inline-start:58%}90%,100%{inset-inline-start:84%}}
+@media (max-width:640px){.track{grid-template-columns:1fr 1fr;row-gap:22px}.track::before,.tag{display:none}}
+@media (prefers-reduced-motion:reduce){.tag{animation:none}.ask{transition:none}}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:14px}
+.trust div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.trust b{display:block;color:var(--butter);margin-bottom:4px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.badges span{border:1px solid var(--line);border-radius:99px;padding:6px 14px;color:var(--soft);font-size:.92rem}
+.langs{display:flex;gap:16px;overflow:hidden;white-space:nowrap;color:var(--soft);margin-top:10px;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
 </style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "إدارة المفقودات في الأمانات والبلديات: من الحديقة إلى الفعالية", "description": "كيف تنظم الأمانات والبلديات المفقودات في الحدائق والممشى والواجهات البحرية والفعاليات العامة، وتخدم الزوار بتسليم آمن وموثق.", "datePublished": "2026-11-21", "dateModified": "2026-11-21", "inLanguage": "ar", "mainEntityOfPage": "https://dhallati.com/blog/amanat-baladiyat-lost-and-found.html", "image": "https://dhallati.com/og.jpg", "author": {"@type": "Organization", "name": "ضالّتي"}, "publisher": {"@context": "https://schema.org", "@type": "Organization", "name": "ضالّتي", "alternateName": ["Dallati", "Dalati", "ضالتي"], "url": "https://dhallati.com", "logo": "https://dhallati.com/icon.png", "email": "info@dhallati.com", "telephone": "+966545510045", "areaServed": "SA", "sameAs": ["https://www.instagram.com/dhallati.sa/", "https://x.com/dhallati", "https://www.facebook.com/profile.php?id=61596629137000"]}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "هل يناسب أكثر من حديقة أو موقع؟", "acceptedAnswer": {"@type": "Answer", "text": "نعم، الموظف يسجل الغرض من جواله في أي موقع، والزائر يبحث في مكان واحد."}}, {"@type": "Question", "name": "كم اشتراك الأمانات والبلديات؟", "acceptedAnswer": {"@type": "Answer", "text": "999 ريال شهريًا للجهات الحكومية."}}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ضالّتي", "item": "https://dhallati.com/"}, {"@type": "ListItem", "position": 2, "name": "المقالات", "item": "https://dhallati.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "إدارة المفقودات في الأمانات والبلديات: من الحديقة إلى الفعالية", "item": "https://dhallati.com/blog/amanat-baladiyat-lost-and-found.html"}]}</script></head><body><div class="w">
 <header><a class="brand" href="/"><img src="/icon.png" alt="" width="44" height="44"><b>ضالّتي</b></a>
 <nav><a href="/how-it-works.html">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="/gov.html">للجهات الحكومية</a><a href="/support.html">الدعم</a><a href="https://apps.apple.com/app/id6831172490">حمّل التطبيق</a></nav></header>
