@@ -1,14 +1,14 @@
 import json, os, html, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from articles import ARTICLES
-from pages import build_pages, CITIES
+from pages import build_pages, CITIES, build_pay
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://dhallati.com"
 APP = "https://apps.apple.com/app/id6831172490"
 WEBAPP = "/app/"
-PAY_PRIVATE = "mailto:info@dhallati.com?subject=%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D8%B6%D8%A7%D9%84%D9%91%D8%AA%D9%8A%20299%20%D8%B1%D9%8A%D8%A7%D9%84"  # replace with payment link
-PAY_GOV = "mailto:info@dhallati.com?subject=%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D8%AC%D9%87%D8%A9%20%D8%AD%D9%83%D9%88%D9%85%D9%8A%D8%A9%20999%20%D8%B1%D9%8A%D8%A7%D9%84"  # replace with payment link
+PAY_PRIVATE = "/subscribe.html?plan=private"
+PAY_GOV = "/subscribe.html?plan=gov"
 SUB_PRIVATE = f'<a class="btn" href="{PAY_PRIVATE}">اشترك: جهة خاصة 299 ريال شهريًا</a>'
 SUB_GOV = f'<a class="btn o" href="{PAY_GOV}">اشترك: جهة حكومية 999 ريال شهريًا</a>'
 DL = f'<a class="btn" href="{APP}">للآيفون: حمّل من App Store</a><a class="btn o" href="{WEBAPP}">لغير الآيفون: افتح ضالّتي من المتصفح</a>'
@@ -216,5 +216,6 @@ def extras():
     write("/404.html", t)
 
 EXTRA, _ = build_pages(head, FOOT, ORG, SITE, APP, write, html, DL)
+build_pay(head, FOOT, ORG, write)
 home(); gov(); blog_index(); [article(a) for a in ARTICLES]; extras()
 print("ok", len(ARTICLES))

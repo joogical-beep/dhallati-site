@@ -93,3 +93,35 @@ def build_pages(head, FOOT, ORG, SITE, APP, write, html, DL):
         write(path, page_shell(head, FOOT, f"تطبيق مفقودات في {name} | ضالّتي",
             f"البحث عن المفقودات في {name}: ضالّتي ينظم المفقودات في المولات والمستشفيات والفنادق والجهات الحكومية، ويساعد صاحب الغرض يلقاه من جواله.", path, [ORG, faqld(cfaq)], body))
     return ["/how-it-works.html","/support.html","/privacy.html","/delete-account.html"] + [p for p,_ in links], links
+
+PK = "pk_live_HfyJvNhYsJAvK3q7XuDheGEUekSBrwiNZcyX4BCd"  # Moyasar publishable key (public by design)
+
+def build_pay(head, FOOT, ORG, write):
+    body = """<section class="hero"><h1 id="t">اشتراك ضالّتي</h1><p class="lead" id="sub"></p></section>
+<link rel="stylesheet" href="https://cdn.moyasar.com/mpf/1.14.0/moyasar.css">
+<style>.f{display:grid;gap:12px;max-width:440px}.f label{display:grid;gap:6px;color:var(--cream)}.f input{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.mysr-form{max-width:440px;background:#fff;border-radius:16px;padding:16px;color:#222;direction:ltr}#err{color:#f2a0a0}</style>
+<form class="f" id="info"><label>اسم الجهة<input id="org" required></label><label>البريد الإلكتروني<input id="em" type="email" required dir="ltr"></label><label>الجوال<input id="ph" type="tel" required dir="ltr"></label>
+<p id="err"></p><button class="btn" type="submit">متابعة للدفع</button></form>
+<div class="mysr-form" hidden></div>
+<p class="soft">الدفع آمن عبر ميسّر. بعد الدفع نجهّز حساب جهتكم خلال يوم عمل، ونرسل التفاصيل على بريدكم.</p>
+<script src="https://cdn.moyasar.com/mpf/1.14.0/moyasar.js"></script>
+<script>
+const plans={private:{a:29900,n:"جهة خاصة",p:"299 ريال شهريًا"},gov:{a:99900,n:"جهة حكومية",p:"999 ريال شهريًا"}};
+const k=new URLSearchParams(location.search).get("plan")==="gov"?"gov":"private";const pl=plans[k];
+document.getElementById("t").textContent="اشتراك ضالّتي: "+pl.n;document.getElementById("sub").textContent=pl.p+"، يمكن الإلغاء في أي وقت.";
+document.getElementById("info").addEventListener("submit",e=>{e.preventDefault();
+ const org=document.getElementById("org").value.trim(),em=document.getElementById("em").value.trim(),ph=document.getElementById("ph").value.trim();
+ if(!org||!em||!ph){document.getElementById("err").textContent="أكمل البيانات";return}
+ e.target.hidden=true;const box=document.querySelector(".mysr-form");box.hidden=false;
+ Moyasar.init({element:".mysr-form",amount:pl.a,currency:"SAR",language:"ar",
+  description:"اشتراك ضالّتي شهر - "+pl.n+" - "+org,publishable_api_key:"%PK%",
+  callback_url:location.origin+"/thanks.html",methods:["creditcard"],
+  metadata:{plan:k,org:org,email:em,phone:ph}});});
+</script>""".replace("%PK%", PK)
+    write("/subscribe.html", head("اشتراك ضالّتي | الدفع", "اشترك في ضالّتي لإدارة المفقودات في جهتك، والدفع آمن عبر ميسّر.", "/subscribe.html", [ORG]) + f"<main>{body}</main>" + FOOT)
+    body = """<section class="hero"><h1 id="h">جاري التحقق…</h1><p class="lead" id="m"></p></section>
+<script>const q=new URLSearchParams(location.search);const ok=q.get("status")==="paid";
+document.getElementById("h").textContent=ok?"تم الدفع، شكرًا لكم":"لم يكتمل الدفع";
+document.getElementById("m").textContent=ok?"نجهّز حساب جهتكم خلال يوم عمل، ونرسل التفاصيل على بريدكم.":"حاول مرة ثانية، أو راسلنا على info@dhallati.com";</script>
+<div class="btns"><a class="btn" href="/">الرئيسية</a><a class="btn o" href="/support.html">الدعم</a></div>"""
+    write("/thanks.html", head("حالة الدفع | ضالّتي", "حالة الدفع لاشتراك ضالّتي.", "/thanks.html", []).replace('content="index,follow,max-image-preview:large"','content="noindex"') + f"<main>{body}</main>" + FOOT)
