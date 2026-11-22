@@ -99,7 +99,7 @@ PK = "pk_live_HfyJvNhYsJAvK3q7XuDheGEUekSBrwiNZcyX4BCd"  # Moyasar publishable k
 def build_pay(head, FOOT, ORG, write):
     body = """<section class="hero"><h1 id="t">اشتراك ضالّتي</h1><p class="lead" id="sub"></p></section>
 <link rel="stylesheet" href="https://cdn.moyasar.com/mpf/1.14.0/moyasar.css">
-<style>.f{display:grid;gap:12px;max-width:440px}.f label{display:grid;gap:6px;color:var(--cream)}.f input{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.mysr-form{max-width:440px;background:#fff;border-radius:16px;padding:16px;color:#222;direction:ltr}#err{color:#f2a0a0}</style>
+<style>.f[hidden],.mysr-form[hidden]{display:none}.f{display:grid;gap:12px;max-width:440px}.f label{display:grid;gap:6px;color:var(--cream)}.f input{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.mysr-form{max-width:440px;background:#fff;border-radius:16px;padding:16px;color:#222;direction:ltr}#err{color:#f2a0a0}</style>
 <form class="f" id="info"><label>اسم الجهة<input id="org" required></label><label>البريد الإلكتروني<input id="em" type="email" required dir="ltr"></label><label>الجوال<input id="ph" type="tel" required dir="ltr"></label>
 <p id="err"></p><button class="btn" type="submit">متابعة للدفع</button></form>
 <div class="mysr-form" hidden></div>
