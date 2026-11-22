@@ -6,7 +6,7 @@ from pages import build_pages, CITIES
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://dhallati.com"
 APP = "https://apps.apple.com/app/id6831172490"
-SOCIAL = ["https://www.instagram.com/dhallati.sa/", "https://www.facebook.com/profile.php?id=61596629137000"]  # filled after accounts are created
+SOCIAL = ["https://www.instagram.com/dhallati.sa/", "https://x.com/dhallati", "https://www.facebook.com/profile.php?id=61596629137000"]  # filled after accounts are created
 
 CSS = """
 :root{--bg:#2F2924;--ink:#F1E7D6;--soft:#C9BBA6;--card:#3A322B;--line:#4E433A;--butter:#F2E2A0;--cream:#ECDFC8;color-scheme:dark}
@@ -84,7 +84,7 @@ def head(title, desc, path, extra_ld):
 CITY_LINKS = " ".join(f'<a href="/cities/{c[0]}.html">مفقودات {c[1]}</a>' for c in CITIES)
 FOOT = f"""<footer>ضالّتي، تطبيق سعودي لإدارة المفقودات والموجودات في المنشآت.<br>
 <span class="ltr">info@dhallati.com</span><br><span class="ltr">0545510045</span>
-<p>حساباتنا: <a href="https://www.instagram.com/dhallati.sa/">انستقرام</a> <a href="https://www.facebook.com/profile.php?id=61596629137000">فيسبوك</a></p>
+<p>حساباتنا: <a href="https://www.instagram.com/dhallati.sa/">انستقرام</a> <a href="https://www.facebook.com/profile.php?id=61596629137000">فيسبوك</a> <a href="https://x.com/dhallati">إكس</a></p>
 <p><a href="/how-it-works.html">كيف يعمل</a> <a href="/support.html">الدعم</a> <a href="/privacy.html">سياسة الخصوصية</a> <a href="/delete-account.html">حذف الحساب</a></p>
 <p>{CITY_LINKS}</p></footer></div></body></html>"""
 
