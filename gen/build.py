@@ -7,6 +7,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://dhallati.com"
 APP = "https://apps.apple.com/app/id6831172490"
 WEBAPP = "/app/"
+PAY_PRIVATE = "mailto:info@dhallati.com?subject=%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D8%B6%D8%A7%D9%84%D9%91%D8%AA%D9%8A%20299%20%D8%B1%D9%8A%D8%A7%D9%84"  # replace with payment link
+PAY_GOV = "mailto:info@dhallati.com?subject=%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D8%AC%D9%87%D8%A9%20%D8%AD%D9%83%D9%88%D9%85%D9%8A%D8%A9%20999%20%D8%B1%D9%8A%D8%A7%D9%84"  # replace with payment link
+SUB_PRIVATE = f'<a class="btn" href="{PAY_PRIVATE}">اشترك: جهة خاصة 299 ريال شهريًا</a>'
+SUB_GOV = f'<a class="btn o" href="{PAY_GOV}">اشترك: جهة حكومية 999 ريال شهريًا</a>'
 DL = f'<a class="btn" href="{APP}">للآيفون: حمّل من App Store</a><a class="btn o" href="{WEBAPP}">لغير الآيفون: افتح ضالّتي من المتصفح</a>'
 SOCIAL = ["https://www.instagram.com/dhallati.sa/", "https://x.com/dhallati", "https://www.facebook.com/profile.php?id=61596629137000"]  # filled after accounts are created
 
@@ -118,7 +122,10 @@ def home():
              "/", [ORG, app, fq])
     t += f"""<main><section class="hero"><h1>المفقودات في منشأتك، ترجع لأصحابها بأمان</h1>
 <p class="lead">«ضالّتي» تطبيق سعودي على iPhone لإدارة المفقودات والموجودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية.</p>
-<div class="btns">{DL}</div><p><a href="mailto:info@dhallati.com">اطلب حساب لمنشأتك</a></p></section>
+<div class="plans" style="margin-top:28px">
+<div class="p"><h3>للأفراد: ضاع منك شيء؟</h3><p class="soft">مجانًا. ابحث عن غرضك من جوالك.</p><div class="btns">{DL}</div></div>
+<div class="p"><h3>للجهات والمنشآت</h3><p class="soft">اشتراك شهري، ونجهّز حسابكم خلال يوم عمل.</p><div class="btns">{SUB_PRIVATE}{SUB_GOV}</div></div>
+</div></section>
 <p class="quote">الناس لا تنسى أبدًا المكان الذي صنع لها ذكرى سعيدة.</p>
 <h2 id="how">كيف يعمل</h2>
 <ol class="steps"><li>الموظف يسجّل الغرض الموجود بصورة ووصف خلال ثوانٍ.</li>
@@ -129,9 +136,9 @@ def home():
 <li>بدون أجهزة ولا تركيب، كل شيء عن بُعد.</li><li>نجهّز حسابكم خلال يوم عمل واحد.</li></ul>
 <h2 id="prices">الأسعار</h2>
 <div class="plans"><div class="p"><h3>الجهات الخاصة</h3><p class="price">299 <span>ريال شهريًا</span></p>
-<p class="soft">المولات، المستشفيات والعيادات، المطاعم والمقاهي، الفنادق، الشركات، الجامعات والمدارس الخاصة.</p></div>
+<p class="soft">المولات، المستشفيات والعيادات، المطاعم والمقاهي، الفنادق، الشركات، الجامعات والمدارس الخاصة.</p><div class="btns">{SUB_PRIVATE}</div></div>
 <div class="p"><h3>الجهات الحكومية</h3><p class="price">999 <span>ريال شهريًا</span></p>
-<p class="soft">الأمانات والبلديات، الحدائق العامة، المطارات، المستشفيات والجامعات الحكومية، وكل جهة حكومية.</p></div></div>
+<p class="soft">الأمانات والبلديات، الحدائق العامة، المطارات، المستشفيات والجامعات الحكومية، وكل جهة حكومية.</p><div class="btns">{SUB_GOV}</div></div></div>
 <p class="soft">يمكن إلغاء الاشتراك في أي وقت.</p>
 <h2>من المقالات</h2><ul class="posts">{posts}</ul>
 <p><a href="/blog/">كل المقالات</a></p>
@@ -183,7 +190,7 @@ def gov():
            "/gov.html",[ORG,svc,fq])
     t+=f"""<main><section class="hero"><h1>إدارة المفقودات للوزارات والأمانات والبلديات</h1>
 <p class="lead">من الحدائق والممشى إلى مراكز خدمة المستفيدين: سجل موحد لكل المواقع، والمستفيد يبحث بنفسه من جواله، والتسليم بعد تحقق.</p>
-<div class="btns"><a class="btn" href="mailto:info@dhallati.com">اطلب حساب الجهة</a><a class="btn o" href="{APP}">للآيفون: App Store</a><a class="btn o" href="{WEBAPP}">لغير الآيفون: من المتصفح</a></div></section>
+<div class="btns">{SUB_GOV}<a class="btn o" href="{APP}">للآيفون: App Store</a><a class="btn o" href="{WEBAPP}">لغير الآيفون: من المتصفح</a></div></section>
 <h2>لمن؟</h2>
 <ul class="feat"><li>الوزارات والهيئات ومراكز خدمة المستفيدين</li><li>الأمانات والبلديات</li><li>الحدائق العامة والممشى والواجهات البحرية</li><li>المطارات والمستشفيات والجامعات الحكومية</li></ul>
 <h2>كيف يخدم الجهة</h2>
