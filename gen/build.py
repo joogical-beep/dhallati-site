@@ -85,7 +85,7 @@ def head(title, desc, path, extra_ld):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap">
 <style>{CSS}{HL.CSS}</style>{ld}</head><body><div class="w">
-<header><a class="brand" href="/"><img src="/icon.png" alt="" width="44" height="44"><b>ضالّتي</b></a>
+<header><a class="brand" href="/"><img src="/icon-88.webp" alt="" width="44" height="44"><b>ضالّتي</b></a>
 <nav><a href="/how-it-works.html">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="/gov.html">للجهات الحكومية</a><a href="/support.html">الدعم</a><a href="{APP}">حمّل التطبيق</a></nav></header>
 """
 
@@ -120,7 +120,7 @@ def home():
     faqh = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in faq)
     t = head("ضالّتي (ضالتي) Dallati | تطبيق مفقودات للمنشآت في السعودية",
              "ضالّتي (Dallati) تطبيق مفقودات سعودي لإدارة المفقودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية: تسجيل بالصور، بحث ومطابقة، وتسليم آمن.",
-             "/", [ORG, app, fq])
+             "/", [ORG, {"@context":"https://schema.org","@type":"WebSite","name":"ضالّتي","alternateName":["Dallati","ضالتي"],"url":SITE,"inLanguage":"ar"}, app, fq])
     t += HL.hero(APP, WEBAPP) + HL.JOURNEY + f"""<main>
 <div class="plans" style="margin-top:36px">
 <div class="p"><h3>للأفراد: ضاع منك شيء؟</h3><p class="soft">مجانًا. ابحث وبلّغ من جوالك.</p><div class="btns">{DL}</div></div>
@@ -177,21 +177,35 @@ def gov():
     faqh="".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in faq)
     rel=[a for a in ARTICLES if a["slug"] in ("amanat-baladiyat-lost-and-found","ministries-service-centers-lost-and-found","government-lost-and-found-office")]
     posts="".join(f'<li><a href="/blog/{a["slug"]}.html"><b>{html.escape(a["h1"])}</b></a></li>' for a in rel)
-    t=head("ضالّتي للجهات الحكومية | إدارة المفقودات في الوزارات والأمانات والبلديات",
-           "حل سعودي لإدارة المفقودات في الوزارات والهيئات والأمانات والبلديات والحدائق والمطارات ومراكز الخدمة: تسجيل بالصور، بحث ذاتي، وتسليم موثق.",
+    t=head("نظام إدارة المفقودات للجهات الحكومية | ضالّتي",
+           "نظام سعودي لإدارة المفقودات في الوزارات والأمانات والبلديات والمطارات والمستشفيات: سجل موحّد، بحث ذاتي للمستفيد، وتسليم موثّق. اطلب عرضًا للجهة.",
            "/gov.html",[ORG,svc,fq])
-    t+=f"""<main><section class="hero"><h1>إدارة المفقودات للوزارات والأمانات والبلديات</h1>
-<p class="lead">من الحدائق والممشى إلى مراكز خدمة المستفيدين: سجل موحد لكل المواقع، والمستفيد يبحث بنفسه من جواله، والتسليم بعد تحقق.</p>
-<div class="btns">{SUB_GOV}<a class="btn o" href="{APP}">للآيفون: App Store</a><a class="btn o" href="{WEBAPP}">لغير الآيفون: من المتصفح</a></div></section>
+    t+=f"""<main><section class="hero"><h1>نظام إدارة المفقودات للوزارات والأمانات والبلديات</h1>
+<p class="lead">سجل موحّد لكل مواقع الجهة، والمستفيد يبحث بنفسه من جواله، والتسليم بعد تحقق وموثّق. بدون أجهزة ولا ربط أنظمة.</p>
+<div class="btns"><a class="btn" href="#req">اطلب عرضًا للجهة</a>{SUB_GOV}</div></section>
+<h2>التحدي في الجهات اليوم</h2>
+<ul class="feat"><li>سجلات ورقية متفرقة بين المواقع والفروع.</li><li>اتصالات واستفسارات متكررة من المراجعين.</li><li>صعوبة مطابقة وصف المراجع مع الغرض الموجود.</li><li>تسليم بدون تحقق ولا توثيق.</li></ul>
+<h2>كيف يحلّها ضالّتي</h2>
+<ol class="steps"><li>الموظف يسجّل الغرض بصورة ووصف خلال ثوانٍ، من أي موقع.</li><li>المستفيد يبحث من جواله، والتطبيق يطابقه مع الموجودات.</li><li>سؤال تحقق، ثم تسليم موثّق لصاحب الغرض.</li></ol>
+<h2>ما تكسبه الجهة</h2>
+<ul class="feat"><li>سجل واحد لكل المواقع بدل الدفاتر.</li><li>ضغط أقل على الاستقبال وخدمة المستفيدين.</li><li>كل تسليم موثّق ويمكن الرجوع له.</li><li>تجربة مستفيد أفضل بـ14 لغة.</li><li>تواصل آمن ورقم الموظف مخفي.</li><li>تشغيل عن بُعد خلال يوم عمل.</li></ul>
 <h2>لمن؟</h2>
-<ul class="feat"><li>الوزارات والهيئات ومراكز خدمة المستفيدين</li><li>الأمانات والبلديات</li><li>الحدائق العامة والممشى والواجهات البحرية</li><li>المطارات والمستشفيات والجامعات الحكومية</li></ul>
-<h2>كيف يخدم الجهة</h2>
-<ol class="steps"><li>الموظف يسجل الغرض بصورة ووصف خلال ثوانٍ، من أي موقع.</li><li>المستفيد يبحث من جواله، والتطبيق يطابقه مع الموجودات.</li><li>سؤال تحقق، ثم تسليم موثق لصاحب الغرض.</li></ol>
-<ul class="feat"><li>تواصل داخل التطبيق، ورقم الموظف مخفي.</li><li>14 لغة لخدمة الزوار والسياح.</li><li>بدون أجهزة ولا ربط أنظمة.</li><li>الحساب يجهز خلال يوم عمل.</li></ul>
-<h2>الاشتراك</h2><div class="plans"><div class="p"><h3>الجهات الحكومية</h3><p class="price">999 <span>ريال شهريًا</span></p><p class="soft">يمكن الإلغاء في أي وقت.</p></div></div>
+<ul class="feat"><li>الوزارات والهيئات ومراكز خدمة المستفيدين</li><li>الأمانات والبلديات</li><li>الحدائق العامة والممشى والواجهات البحرية</li><li>المطارات والمستشفيات والجامعات</li></ul>
+<h2>خطوات التعاون</h2>
+<ol class="steps"><li>طلب من النموذج أدناه أو بالبريد الرسمي.</li><li>عرض للجهة وتجهيز الحساب خلال يوم عمل.</li><li>التشغيل: الموظفون يسجّلون من جوالاتهم مباشرة.</li></ol>
+<h2>الاشتراك</h2><div class="plans"><div class="p"><h3>الجهات الحكومية</h3><p class="price">999 <span>ريال شهريًا</span></p><p class="soft">يمكن الإلغاء في أي وقت.</p><div class="btns">{SUB_GOV}</div></div></div>
+<div class="contact" id="req"><h2 style="margin-top:0">طلب عرض للجهة</h2>
+<p class="soft">اكتب بيانات الجهة، ونرسل لكم العرض ونتواصل خلال يوم عمل. وبعد الإرسال تقدر تنزّل ورقة التعريف بضالّتي.</p>
+<form id="lf" class="lf"><input name="org" required placeholder="اسم الجهة"><input name="sector" placeholder="القطاع (أمانة، وزارة، مستشفى…)">
+<input name="contact" placeholder="اسم المسؤول"><input name="email" type="email" required dir="ltr" placeholder="البريد الرسمي">
+<input name="phone" type="tel" dir="ltr" placeholder="رقم التواصل"><button class="btn" type="submit">أرسل الطلب</button></form>
+<p id="lr" class="soft"></p></div>
 <h2>مقالات للجهات الحكومية</h2><ul class="posts">{posts}</ul>
-<h2>أسئلة شائعة</h2>{faqh}
-<div class="contact"><h2 style="margin-top:0">تواصل معنا</h2><p>راسلونا على <span class="ltr">info@dhallati.com</span> أو اتصلوا على <span class="ltr">0545510045</span>.</p></div></main>{{FOOT}}"""
+<h2>أسئلة شائعة</h2>{faqh}</main>{{FOOT}}
+<style>.lf{{display:grid;gap:10px;max-width:520px}}.lf input{{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}}</style>
+<script>document.getElementById("lf").addEventListener("submit",async e=>{{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const r=document.getElementById("lr");r.textContent="جاري الإرسال…";
+try{{const x=await fetch("https://gtgnekbrkczlszrwwuaz.supabase.co/functions/v1/dallati-subs",{{method:"POST",headers:{{"content-type":"application/json"}},body:JSON.stringify({{lead:f}})}});const j=await x.json();
+if(!j.ok)throw 0;e.target.hidden=true;r.innerHTML='وصل طلبكم، ونتواصل معكم خلال يوم عمل. <a href="/dallati-gov.pdf" download>نزّل ورقة التعريف بضالّتي (PDF)</a>';}}catch(_){{r.textContent="ما وصل الطلب، راسلونا على info@dhallati.com"}}}});</script>"""
     write("/gov.html",t.replace("{FOOT}",FOOT))
 
 def extras():
