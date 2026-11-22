@@ -91,13 +91,13 @@ def head(title, desc, path, extra_ld):
 
 CITY_LINKS = " ".join(f'<a href="/cities/{c[0]}.html">مفقودات {c[1]}</a>' for c in CITIES)
 FOOT = f"""<footer>ضالّتي، تطبيق سعودي لإدارة المفقودات والموجودات في المنشآت.<br>
-<span class="ltr">info@dhallati.com</span><br><span class="ltr">0545510045</span>
+<span class="ltr">info@dhallati.com</span>
 <p>حساباتنا: <a href="https://www.instagram.com/dhallati.sa/">انستقرام</a> <a href="https://www.facebook.com/profile.php?id=61596629137000">فيسبوك</a> <a href="https://x.com/dhallati">إكس</a></p>
 <p><a href="/how-it-works.html">كيف يعمل</a> <a href="/support.html">الدعم</a> <a href="/privacy.html">سياسة الخصوصية</a> <a href="/delete-account.html">حذف الحساب</a></p>
 <p>{CITY_LINKS}</p></footer></div></body></html>"""
 
 ORG = {"@context":"https://schema.org","@type":"Organization","name":"ضالّتي","alternateName":["Dallati","Dalati","ضالتي"],"url":SITE,
-       "logo":SITE+"/icon.png","email":"info@dhallati.com","telephone":"+966545510045","areaServed":"SA"}
+       "logo":SITE+"/icon.png","email":"info@dhallati.com","areaServed":"SA"}
 
 def write(path, text):
     full = os.path.join(ROOT, path.lstrip("/"))
@@ -136,7 +136,7 @@ def home():
 <p><a href="/blog/">كل المقالات</a></p>
 <h2>أسئلة شائعة</h2>{faqh}
 <div class="contact"><h2 style="margin-top:0">ابدأ اليوم</h2>
-<p>راسلنا على <span class="ltr">info@dhallati.com</span> أو اتصل على <span class="ltr">0545510045</span>، ونجهّز حساب منشأتك خلال يوم عمل.</p>
+<p>راسلنا على <span class="ltr">info@dhallati.com</span>، ونجهّز حساب منشأتك خلال يوم عمل.</p>
 <div class="btns">{DL}</div></div></main>{FOOT}"""
     write("/index.html", t.replace("</body>", HL.JS+"</body>"))
 

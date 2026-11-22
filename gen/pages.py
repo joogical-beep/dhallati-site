@@ -50,7 +50,7 @@ def build_pages(head, FOOT, ORG, SITE, APP, write, html, DL):
             ("كم وقت الرد؟","نرد على الرسائل خلال يوم عمل.")]
     body = f"""<section class="hero"><h1>الدعم والمساعدة</h1><p class="lead">نرد خلال يوم عمل.</p></section>
 <div class="contact"><h2 style="margin-top:0">تواصل معنا</h2>
-<p>البريد: <span class="ltr">info@dhallati.com</span><br>الجوال: <span class="ltr">0545510045</span></p>
+<p>البريد: <span class="ltr">info@dhallati.com</span></p>
 <a class="btn" href="mailto:info@dhallati.com?subject=%D8%AF%D8%B9%D9%85%20%D8%B6%D8%A7%D9%84%D9%91%D8%AA%D9%8A">راسلنا</a></div>
 <h2>أسئلة شائعة</h2>{faqh(sfaq)}
 <p><a href="/privacy.html">سياسة الخصوصية</a> <a href="/delete-account.html">حذف الحساب</a></p>"""
