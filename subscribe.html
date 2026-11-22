@@ -95,7 +95,7 @@ function render(){const k=document.querySelector('input[name=plan]:checked').val
  if(sig===last)return;last=sig;$("wait").hidden=true;box.innerHTML="";
  Moyasar.init({element:".mysr-form",amount:P[k].a,currency:"SAR",language:"ar",
   description:"اشتراك ضالّتي الشهري - "+P[k].n+" - "+org,publishable_api_key:"pk_live_HfyJvNhYsJAvK3q7XuDheGEUekSBrwiNZcyX4BCd",
-  callback_url:location.origin+"/thanks.html",methods:["creditcard"],credit_card:{save_card:true},
+  callback_url:location.origin+"/thanks.html",methods:["applepay","creditcard"],credit_card:{save_card:true},apple_pay:{country:"SA",label:"ضالّتي",validate_merchant_url:"https://api.moyasar.com/v1/applepay/initiate"},
   metadata:{app:"dallati",plan:k,org:org,email:em,phone:ph}});}
 document.querySelectorAll("input").forEach(i=>i.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(render,500)}));
 document.querySelectorAll('input[name=plan]').forEach(i=>i.addEventListener("change",render));
