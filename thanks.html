@@ -65,11 +65,18 @@ article li{margin:6px 0}
 </style></head><body><div class="w">
 <header><a class="brand" href="/"><img src="/icon.png" alt="" width="44" height="44"><b>ضالّتي</b></a>
 <nav><a href="/how-it-works.html">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="/gov.html">للجهات الحكومية</a><a href="/support.html">الدعم</a><a href="https://apps.apple.com/app/id6831172490">حمّل التطبيق</a></nav></header>
-<main><section class="hero"><h1 id="h">جاري التحقق…</h1><p class="lead" id="m"></p></section>
-<script>const q=new URLSearchParams(location.search);const ok=q.get("status")==="paid";
-document.getElementById("h").textContent=ok?"تم الدفع، شكرًا لكم":"لم يكتمل الدفع";
-document.getElementById("m").textContent=ok?"نجهّز حساب جهتكم خلال يوم عمل، ونرسل التفاصيل على بريدكم.":"حاول مرة ثانية، أو راسلنا على info@dhallati.com";</script>
-<div class="btns"><a class="btn" href="/">الرئيسية</a><a class="btn o" href="/support.html">الدعم</a></div></main><footer>ضالّتي، تطبيق سعودي لإدارة المفقودات والموجودات في المنشآت.<br>
+<main><section class="hero"><h1 id="h">جاري التأكد من الدفع…</h1><p class="lead" id="m"></p></section>
+<div class="btns"><a class="btn" href="/">الرئيسية</a><a class="btn o" href="/support.html">الدعم</a></div>
+<script>const q=new URLSearchParams(location.search),id=q.get("id");const h=document.getElementById("h"),m=document.getElementById("m");
+function fail(x){h.textContent="لم يكتمل الدفع";m.textContent=(x?x+". ":"")+"حاول مرة ثانية من صفحة الاشتراك، أو راسلنا على info@dhallati.com"}
+if(!id||q.get("status")!=="paid"){fail(q.get("message")||"")}else{
+fetch("https://gtgnekbrkczlszrwwuaz.supabase.co/functions/v1/dallati-subs",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({verify:id})}).then(r=>r.json()).then(j=>{
+ if(!j.ok){fail(j.message||"");return}
+ h.textContent="تم الاشتراك، شكرًا لكم";
+ const d=j.next?new Date(j.next).toLocaleDateString("ar-SA-u-nu-latn",{year:"numeric",month:"long",day:"numeric"}):"";
+ m.textContent="نجهّز حساب "+(j.org||"جهتكم")+" خلال يوم عمل ونرسل التفاصيل على بريدكم."+(j.auto&&d?" التجديد القادم تلقائيًا في "+d+".":"");
+}).catch(()=>{h.textContent="تم استلام الدفع";m.textContent="نجهّز حسابكم خلال يوم عمل ونرسل التفاصيل على بريدكم."})}
+</script></main><footer>ضالّتي، تطبيق سعودي لإدارة المفقودات والموجودات في المنشآت.<br>
 <span class="ltr">info@dhallati.com</span><br><span class="ltr">0545510045</span>
 <p>حساباتنا: <a href="https://www.instagram.com/dhallati.sa/">انستقرام</a> <a href="https://www.facebook.com/profile.php?id=61596629137000">فيسبوك</a> <a href="https://x.com/dhallati">إكس</a></p>
 <p><a href="/how-it-works.html">كيف يعمل</a> <a href="/support.html">الدعم</a> <a href="/privacy.html">سياسة الخصوصية</a> <a href="/delete-account.html">حذف الحساب</a></p>

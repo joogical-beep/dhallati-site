@@ -97,31 +97,53 @@ def build_pages(head, FOOT, ORG, SITE, APP, write, html, DL):
 PK = "pk_live_HfyJvNhYsJAvK3q7XuDheGEUekSBrwiNZcyX4BCd"  # Moyasar publishable key (public by design)
 
 def build_pay(head, FOOT, ORG, write):
-    body = """<section class="hero"><h1 id="t">اشتراك ضالّتي</h1><p class="lead" id="sub"></p></section>
+    FN = "https://gtgnekbrkczlszrwwuaz.supabase.co/functions/v1/dallati-subs"
+    body = """<section class="hero" style="padding-bottom:8px"><h1>اشتراك ضالّتي للجهات</h1><p class="lead">اختر نوع الجهة، اكتب بياناتها، وادفع. يتجدد الاشتراك تلقائيًا كل شهر، ويمكن إلغاؤه في أي وقت.</p></section>
 <link rel="stylesheet" href="https://cdn.moyasar.com/mpf/1.14.0/moyasar.css">
-<style>.f[hidden],.mysr-form[hidden]{display:none}.f{display:grid;gap:12px;max-width:440px}.f label{display:grid;gap:6px;color:var(--cream)}.f input{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.mysr-form{max-width:440px;background:#fff;border-radius:16px;padding:16px;color:#222;direction:ltr}#err{color:#f2a0a0}</style>
-<form class="f" id="info"><label>اسم الجهة<input id="org" required></label><label>البريد الإلكتروني<input id="em" type="email" required dir="ltr"></label><label>الجوال<input id="ph" type="tel" required dir="ltr"></label>
-<p id="err"></p><button class="btn" type="submit">متابعة للدفع</button></form>
-<div class="mysr-form" hidden></div>
-<p class="soft">الدفع آمن عبر ميسّر. بعد الدفع نجهّز حساب جهتكم خلال يوم عمل، ونرسل التفاصيل على بريدكم.</p>
+<style>.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:520px;margin:18px 0}
+.pick label{display:block;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px;cursor:pointer}
+.pick input{position:absolute;opacity:0}.pick label:has(input:checked){border-color:var(--butter)}
+.pick b{display:block;color:var(--cream)}.pick span{font-size:1.6rem;font-weight:700;color:var(--butter)}
+.f{display:grid;gap:12px;max-width:520px}.f label{display:grid;gap:6px;color:var(--cream)}
+.f input{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.card{max-width:520px;margin-top:18px;background:#fff;border-radius:16px;padding:16px;color:#222}
+#wait{color:#555;text-align:center;padding:18px 0}</style>
+<div class="pick" role="radiogroup">
+<label><input type="radio" name="plan" value="private" checked><b>جهة خاصة</b><span>299</span> ريال شهريًا</label>
+<label><input type="radio" name="plan" value="gov"><b>جهة حكومية</b><span>999</span> ريال شهريًا</label></div>
+<div class="f"><label>اسم الجهة<input id="org" autocomplete="organization"></label>
+<label>البريد الإلكتروني<input id="em" type="email" dir="ltr" autocomplete="email"></label>
+<label>الجوال<input id="ph" type="tel" dir="ltr" autocomplete="tel"></label></div>
+<div class="card"><p id="wait">اكتب اسم الجهة والبريد والجوال، وتظهر هنا خانة البطاقة.</p><div class="mysr-form"></div></div>
+<p class="soft">الدفع آمن عبر ميسّر. بعد الدفع نجهّز حساب جهتكم خلال يوم عمل. للإلغاء راسلنا على <span class="ltr">info@dhallati.com</span></p>
 <script src="https://cdn.moyasar.com/mpf/1.14.0/moyasar.js"></script>
 <script>
-const plans={private:{a:29900,n:"جهة خاصة",p:"299 ريال شهريًا"},gov:{a:99900,n:"جهة حكومية",p:"999 ريال شهريًا"}};
-const k=new URLSearchParams(location.search).get("plan")==="gov"?"gov":"private";const pl=plans[k];
-document.getElementById("t").textContent="اشتراك ضالّتي: "+pl.n;document.getElementById("sub").textContent=pl.p+"، يمكن الإلغاء في أي وقت.";
-document.getElementById("info").addEventListener("submit",e=>{e.preventDefault();
- const org=document.getElementById("org").value.trim(),em=document.getElementById("em").value.trim(),ph=document.getElementById("ph").value.trim();
- if(!org||!em||!ph){document.getElementById("err").textContent="أكمل البيانات";return}
- e.target.hidden=true;const box=document.querySelector(".mysr-form");box.hidden=false;
- Moyasar.init({element:".mysr-form",amount:pl.a,currency:"SAR",language:"ar",
-  description:"اشتراك ضالّتي شهر - "+pl.n+" - "+org,publishable_api_key:"%PK%",
-  callback_url:location.origin+"/thanks.html",methods:["creditcard"],
-  metadata:{plan:k,org:org,email:em,phone:ph}});});
+const P={private:{a:29900,n:"جهة خاصة"},gov:{a:99900,n:"جهة حكومية"}};
+const q=new URLSearchParams(location.search);if(q.get("plan")==="gov")document.querySelector('input[value=gov]').checked=true;
+const $=id=>document.getElementById(id);let last="",t;
+function render(){const k=document.querySelector('input[name=plan]:checked').value,org=$("org").value.trim(),em=$("em").value.trim(),ph=$("ph").value.trim();
+ const ok=org.length>1&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)&&ph.replace(/\D/g,"").length>=9;
+ const box=document.querySelector(".mysr-form");const sig=[k,org,em,ph].join("|");
+ if(!ok){$("wait").hidden=false;box.innerHTML="";last="";return}
+ if(sig===last)return;last=sig;$("wait").hidden=true;box.innerHTML="";
+ Moyasar.init({element:".mysr-form",amount:P[k].a,currency:"SAR",language:"ar",
+  description:"اشتراك ضالّتي الشهري - "+P[k].n+" - "+org,publishable_api_key:"%PK%",
+  callback_url:location.origin+"/thanks.html",methods:["creditcard"],credit_card:{save_card:true},
+  metadata:{app:"dallati",plan:k,org:org,email:em,phone:ph}});}
+document.querySelectorAll("input").forEach(i=>i.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(render,500)}));
+document.querySelectorAll('input[name=plan]').forEach(i=>i.addEventListener("change",render));
 </script>""".replace("%PK%", PK)
-    write("/subscribe.html", head("اشتراك ضالّتي | الدفع", "اشترك في ضالّتي لإدارة المفقودات في جهتك، والدفع آمن عبر ميسّر.", "/subscribe.html", [ORG]) + f"<main>{body}</main>" + FOOT)
-    body = """<section class="hero"><h1 id="h">جاري التحقق…</h1><p class="lead" id="m"></p></section>
-<script>const q=new URLSearchParams(location.search);const ok=q.get("status")==="paid";
-document.getElementById("h").textContent=ok?"تم الدفع، شكرًا لكم":"لم يكتمل الدفع";
-document.getElementById("m").textContent=ok?"نجهّز حساب جهتكم خلال يوم عمل، ونرسل التفاصيل على بريدكم.":"حاول مرة ثانية، أو راسلنا على info@dhallati.com";</script>
-<div class="btns"><a class="btn" href="/">الرئيسية</a><a class="btn o" href="/support.html">الدعم</a></div>"""
+    write("/subscribe.html", head("اشتراك ضالّتي للجهات | الدفع", "اشترك في ضالّتي لإدارة المفقودات في جهتك: 299 ريال شهريًا للجهات الخاصة و999 ريال للحكومية، يتجدد تلقائيًا، والدفع آمن عبر ميسّر.", "/subscribe.html", [ORG]) + f"<main>{body}</main>" + FOOT)
+    body = """<section class="hero"><h1 id="h">جاري التأكد من الدفع…</h1><p class="lead" id="m"></p></section>
+<div class="btns"><a class="btn" href="/">الرئيسية</a><a class="btn o" href="/support.html">الدعم</a></div>
+<script>const q=new URLSearchParams(location.search),id=q.get("id");const h=document.getElementById("h"),m=document.getElementById("m");
+function fail(x){h.textContent="لم يكتمل الدفع";m.textContent=(x?x+". ":"")+"حاول مرة ثانية من صفحة الاشتراك، أو راسلنا على info@dhallati.com"}
+if(!id||q.get("status")!=="paid"){fail(q.get("message")||"")}else{
+fetch("%FN%",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({verify:id})}).then(r=>r.json()).then(j=>{
+ if(!j.ok){fail(j.message||"");return}
+ h.textContent="تم الاشتراك، شكرًا لكم";
+ const d=j.next?new Date(j.next).toLocaleDateString("ar-SA-u-nu-latn",{year:"numeric",month:"long",day:"numeric"}):"";
+ m.textContent="نجهّز حساب "+(j.org||"جهتكم")+" خلال يوم عمل ونرسل التفاصيل على بريدكم."+(j.auto&&d?" التجديد القادم تلقائيًا في "+d+".":"");
+}).catch(()=>{h.textContent="تم استلام الدفع";m.textContent="نجهّز حسابكم خلال يوم عمل ونرسل التفاصيل على بريدكم."})}
+</script>""".replace("%FN%", FN)
     write("/thanks.html", head("حالة الدفع | ضالّتي", "حالة الدفع لاشتراك ضالّتي.", "/thanks.html", []).replace('content="index,follow,max-image-preview:large"','content="noindex"') + f"<main>{body}</main>" + FOOT)
