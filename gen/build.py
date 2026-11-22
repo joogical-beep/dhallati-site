@@ -1,6 +1,7 @@
 import json, os, html, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from articles import ARTICLES
+from pages import build_pages, CITIES
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://dhallati.com"
@@ -77,13 +78,17 @@ def head(title, desc, path, extra_ld):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap">
 <style>{CSS}</style>{ld}</head><body><div class="w">
 <header><a class="brand" href="/"><img src="/icon.png" alt="" width="44" height="44"><b>ضالّتي</b></a>
-<nav><a href="/#how">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="/gov.html">للجهات الحكومية</a><a href="{APP}">حمّل التطبيق</a></nav></header>
+<nav><a href="/how-it-works.html">كيف يعمل</a><a href="/#prices">الأسعار</a><a href="/blog/">المقالات</a><a href="/gov.html">للجهات الحكومية</a><a href="/support.html">الدعم</a><a href="{APP}">حمّل التطبيق</a></nav></header>
 """
 
+CITY_LINKS = " ".join(f'<a href="/cities/{c[0]}.html">مفقودات {c[1]}</a>' for c in CITIES)
 FOOT = f"""<footer>ضالّتي، تطبيق سعودي لإدارة المفقودات والموجودات في المنشآت.<br>
-<span class="ltr">info@dhallati.com</span><br><span class="ltr">0545510045</span></footer></div></body></html>"""
+<span class="ltr">info@dhallati.com</span><br><span class="ltr">0545510045</span>
+<p>حساباتنا: <a href="https://www.instagram.com/dhallati.sa/">انستقرام</a> <a href="https://www.facebook.com/profile.php?id=61596629137000">فيسبوك</a></p>
+<p><a href="/how-it-works.html">كيف يعمل</a> <a href="/support.html">الدعم</a> <a href="/privacy.html">سياسة الخصوصية</a> <a href="/delete-account.html">حذف الحساب</a></p>
+<p>{CITY_LINKS}</p></footer></div></body></html>"""
 
-ORG = {"@context":"https://schema.org","@type":"Organization","name":"ضالّتي","alternateName":"Dallati","url":SITE,
+ORG = {"@context":"https://schema.org","@type":"Organization","name":"ضالّتي","alternateName":["Dallati","Dalati","ضالتي"],"url":SITE,
        "logo":SITE+"/icon.png","email":"info@dhallati.com","telephone":"+966545510045","areaServed":"SA"}
 
 def write(path, text):
@@ -97,7 +102,7 @@ def home():
            ("هل نحتاج أجهزة أو تركيب؟","لا، يكفي جوال iPhone، وكل شيء يتم عن بُعد، ونجهّز حسابكم خلال يوم عمل."),
            ("كيف نضمن أن الغرض يرجع لصاحبه؟","بسؤال تحقق قبل التسليم، والتواصل داخل التطبيق ورقم الموظف مخفي."),
            ("كم لغة يدعم؟","14 لغة لخدمة جميع الزوار.")]
-    app = {"@context":"https://schema.org","@type":"MobileApplication","name":"ضالّتي","alternateName":"Dallati",
+    app = {"@context":"https://schema.org","@type":"MobileApplication","name":"ضالّتي","alternateName":["Dallati","Dalati","ضالتي"],
            "operatingSystem":"iOS","applicationCategory":"BusinessApplication","url":SITE,"downloadUrl":APP,
            "offers":[{"@type":"Offer","price":"299","priceCurrency":"SAR","description":"اشتراك شهري للجهات الخاصة"},
                      {"@type":"Offer","price":"999","priceCurrency":"SAR","description":"اشتراك شهري للجهات الحكومية"}]}
@@ -105,8 +110,8 @@ def home():
     if SOCIAL: ORG["sameAs"] = SOCIAL
     posts = "".join(f'<li><a href="/blog/{a["slug"]}.html"><b>{html.escape(a["h1"])}</b><span class="soft">{html.escape(a["desc"][:90])}…</span></a></li>' for a in ARTICLES[:6])
     faqh = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in faq)
-    t = head("ضالّتي | تطبيق إدارة المفقودات والموجودات للمنشآت في السعودية",
-             "ضالّتي تطبيق سعودي لإدارة المفقودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية: تسجيل بالصور، بحث ومطابقة، وتسليم آمن.",
+    t = head("ضالّتي (ضالتي) Dallati | تطبيق مفقودات للمنشآت في السعودية",
+             "ضالّتي (Dallati) تطبيق مفقودات سعودي لإدارة المفقودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية: تسجيل بالصور، بحث ومطابقة، وتسليم آمن.",
              "/", [ORG, app, fq])
     t += f"""<main><section class="hero"><h1>المفقودات في منشأتك، ترجع لأصحابها بأمان</h1>
 <p class="lead">«ضالّتي» تطبيق سعودي على iPhone لإدارة المفقودات والموجودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية.</p>
@@ -188,7 +193,7 @@ def gov():
     write("/gov.html",t.replace("{FOOT}",FOOT))
 
 def extras():
-    urls = [("/","1.0"),("/gov.html","0.9"),("/blog/","0.8")] + [(f"/blog/{a['slug']}.html","0.7") for a in ARTICLES]
+    urls = [("/","1.0"),("/gov.html","0.9"),("/blog/","0.8")] + [(u,"0.8") for u in EXTRA] + [(f"/blog/{a['slug']}.html","0.7") for a in ARTICLES]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + \
          "".join(f"<url><loc>{SITE}{u}</loc><priority>{p}</priority></url>\n" for u,p in urls) + "</urlset>\n"
     write("/sitemap.xml", sm)
@@ -200,5 +205,6 @@ def extras():
     t += f"<main><h1>الصفحة غير موجودة</h1><p><a href='/'>الرجوع للرئيسية</a></p></main>{FOOT}"
     write("/404.html", t)
 
+EXTRA, _ = build_pages(head, FOOT, ORG, SITE, APP, write, html)
 home(); gov(); blog_index(); [article(a) for a in ARTICLES]; extras()
 print("ok", len(ARTICLES))
