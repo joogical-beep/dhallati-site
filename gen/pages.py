@@ -10,7 +10,7 @@ CITIES = [
 def page_shell(head, FOOT, title, desc, path, ld, body):
     return head(title, desc, path, ld) + f"<main>{body}</main>" + FOOT
 
-def build_pages(head, FOOT, ORG, SITE, APP, write, html):
+def build_pages(head, FOOT, ORG, SITE, APP, write, html, DL):
     def faqld(faq):
         return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in faq]}
     def faqh(faq):
@@ -30,7 +30,7 @@ def build_pages(head, FOOT, ORG, SITE, APP, write, html):
 <li><b>التحقق والتسليم:</b> سؤال لا يعرفه إلا صاحب الغرض، ثم التسليم وتوثيقه.</li></ol>
 <h2>للمنشأة</h2><ul class="feat"><li>سجل موحد لكل الموجودات بدل الدفتر الورقي.</li><li>اتصالات أقل على الاستقبال وخدمة العملاء.</li><li>كل تسليم موثق.</li><li>بدون أجهزة ولا تركيب.</li></ul>
 <h2>لصاحب الغرض</h2><ul class="feat"><li>يبحث بنفسه من جواله.</li><li>بلغته، من 14 لغة.</li><li>يستلم غرضه بأمان بعد التحقق.</li></ul>
-<div class="btns"><a class="btn" href="{APP}">حمّل من App Store</a><a class="btn o" href="/support.html">تواصل معنا</a></div>"""
+<div class="btns">{DL}</div><p><a href="/support.html">تواصل معنا</a></p>"""
     write("/how-it-works.html", page_shell(head, FOOT, "كيف يعمل ضالّتي | تطبيق مفقودات بالخطوات",
         "شرح خطوات ضالّتي: تسجيل الغرض بالصورة، البحث والمطابقة، التواصل الآمن، ثم التحقق والتسليم لصاحبه.", "/how-it-works.html", [ORG, how], body))
 
@@ -85,7 +85,7 @@ def build_pages(head, FOOT, ORG, SITE, APP, write, html):
                 (f"هل ضالّتي متاح للمنشآت في {name}؟", "نعم، الخدمة تعمل عن بُعد في كل مدن المملكة، والحساب يجهز خلال يوم عمل.")]
         body = f"""<section class="hero"><h1>تطبيق مفقودات في {name}</h1>
 <p class="lead">«ضالّتي» ينظم المفقودات والموجودات في منشآت {name}: {places}.</p>
-<div class="btns"><a class="btn" href="{APP}">حمّل من App Store</a><a class="btn o" href="/support.html">اطلب حساب لمنشأتك</a></div></section>
+<div class="btns">{DL}</div><p><a href="/support.html">اطلب حساب لمنشأتك</a></p></section>
 <h2>فقدت غرضًا في {name}؟</h2><ol class="steps"><li>تواصل مع المكان اللي فقدت فيه الغرض بأسرع وقت.</li><li>إذا كان المكان يستخدم ضالّتي، ابحث بوصف الغرض من جوالك.</li><li>جاوب سؤال التحقق واستلم غرضك.</li></ol>
 <p class="soft">فقدان الهوية أو الجواز أو الرخصة: بلّغ عنه عبر أبشر.</p>
 <h2>للمنشآت والجهات في {name}</h2><ul class="feat"><li>تسجيل الموجودات بالصورة خلال ثوانٍ.</li><li>14 لغة للزوار والسياح.</li><li>تواصل آمن ورقم الموظف مخفي.</li><li>299 ريال شهريًا للخاص، 999 ريال شهريًا للحكومي.</li></ul>

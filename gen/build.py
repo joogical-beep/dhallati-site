@@ -6,6 +6,8 @@ from pages import build_pages, CITIES
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://dhallati.com"
 APP = "https://apps.apple.com/app/id6831172490"
+WEBAPP = "/app/"
+DL = f'<a class="btn" href="{APP}">للآيفون: حمّل من App Store</a><a class="btn o" href="{WEBAPP}">لغير الآيفون: افتح ضالّتي من المتصفح</a>'
 SOCIAL = ["https://www.instagram.com/dhallati.sa/", "https://x.com/dhallati", "https://www.facebook.com/profile.php?id=61596629137000"]  # filled after accounts are created
 
 CSS = """
@@ -115,7 +117,7 @@ def home():
              "/", [ORG, app, fq])
     t += f"""<main><section class="hero"><h1>المفقودات في منشأتك، ترجع لأصحابها بأمان</h1>
 <p class="lead">«ضالّتي» تطبيق سعودي على iPhone لإدارة المفقودات والموجودات في المولات والمستشفيات والمطاعم والفنادق والجهات الحكومية.</p>
-<div class="btns"><a class="btn" href="{APP}">حمّل من App Store</a><a class="btn o" href="mailto:info@dhallati.com">اطلب حساب لمنشأتك</a></div></section>
+<div class="btns">{DL}</div><p><a href="mailto:info@dhallati.com">اطلب حساب لمنشأتك</a></p></section>
 <p class="quote">الناس لا تنسى أبدًا المكان الذي صنع لها ذكرى سعيدة.</p>
 <h2 id="how">كيف يعمل</h2>
 <ol class="steps"><li>الموظف يسجّل الغرض الموجود بصورة ووصف خلال ثوانٍ.</li>
@@ -135,7 +137,7 @@ def home():
 <h2>أسئلة شائعة</h2>{faqh}
 <div class="contact"><h2 style="margin-top:0">ابدأ اليوم</h2>
 <p>راسلنا على <span class="ltr">info@dhallati.com</span> أو اتصل على <span class="ltr">0545510045</span>، ونجهّز حساب منشأتك خلال يوم عمل.</p>
-<a class="btn" href="{APP}">حمّل ضالّتي</a></div></main>{FOOT}"""
+<div class="btns">{DL}</div></div></main>{FOOT}"""
     write("/index.html", t)
 
 def article(a):
@@ -154,7 +156,7 @@ def article(a):
     t = head(a["title"]+" | ضالّتي", a["desc"], path, [art, fq, bc])
     t += f"""<main><article><p class="meta"><a href="/blog/">المقالات</a></p><h1>{html.escape(a['h1'])}</h1>
 {a['body']}<h2>أسئلة شائعة</h2>{faqh}
-<div class="btns"><a class="btn" href="{APP}">حمّل ضالّتي</a><a class="btn o" href="/#prices">الأسعار</a></div></article>
+<div class="btns">{DL}</div></article>
 <h2>مقالات أخرى</h2><ul class="posts">{rel}</ul></main>{FOOT}"""
     write(path, t)
 
@@ -180,7 +182,7 @@ def gov():
            "/gov.html",[ORG,svc,fq])
     t+=f"""<main><section class="hero"><h1>إدارة المفقودات للوزارات والأمانات والبلديات</h1>
 <p class="lead">من الحدائق والممشى إلى مراكز خدمة المستفيدين: سجل موحد لكل المواقع، والمستفيد يبحث بنفسه من جواله، والتسليم بعد تحقق.</p>
-<div class="btns"><a class="btn" href="mailto:info@dhallati.com">اطلب حساب الجهة</a><a class="btn o" href="{APP}">التطبيق على App Store</a></div></section>
+<div class="btns"><a class="btn" href="mailto:info@dhallati.com">اطلب حساب الجهة</a><a class="btn o" href="{APP}">للآيفون: App Store</a><a class="btn o" href="{WEBAPP}">لغير الآيفون: من المتصفح</a></div></section>
 <h2>لمن؟</h2>
 <ul class="feat"><li>الوزارات والهيئات ومراكز خدمة المستفيدين</li><li>الأمانات والبلديات</li><li>الحدائق العامة والممشى والواجهات البحرية</li><li>المطارات والمستشفيات والجامعات الحكومية</li></ul>
 <h2>كيف يخدم الجهة</h2>
@@ -205,6 +207,6 @@ def extras():
     t += f"<main><h1>الصفحة غير موجودة</h1><p><a href='/'>الرجوع للرئيسية</a></p></main>{FOOT}"
     write("/404.html", t)
 
-EXTRA, _ = build_pages(head, FOOT, ORG, SITE, APP, write, html)
+EXTRA, _ = build_pages(head, FOOT, ORG, SITE, APP, write, html, DL)
 home(); gov(); blog_index(); [article(a) for a in ARTICLES]; extras()
 print("ok", len(ARTICLES))
